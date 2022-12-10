@@ -1,4 +1,5 @@
 = Android Dagger Hilt Dependency Injection Sample
 
 https://developer.android.com/training/dependency-injection/hilt-android[Dependency injection with Hilt] +
-https://developer.android.com/codelabs/android-hilt?hl=fr#0[Utiliser Hilt dans une application Android]
+https://developer.android.com/codelabs/android-hilt?hl=fr#0[Utiliser Hilt dans une application Android] +
+https://dagger.dev/hilt/[hilt website]
