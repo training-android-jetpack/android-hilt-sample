@@ -6,36 +6,46 @@ import android.widget.Toast.LENGTH_SHORT
 import android.widget.Toast.makeText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModel
+import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.HiltAndroidApp
+import dagger.hilt.android.scopes.ViewModelScoped
+import javax.inject.Inject
 
 interface SampleService {
     fun hello(): String
 }
 
 
-
 class SampleServiceInMemory : SampleService {
     override fun hello(): String = "hello"
 }
 
-class SampleViewModel(private val sampleService: SampleService) : ViewModel() {
-    fun sayHello(activity: AppCompatActivity) {
-        makeText(
-            activity,
-            sampleService.hello(),
-            LENGTH_SHORT
-        ).show()
-    }
+//@ViewModelScoped
+class SampleViewModel
+//@Inject
+constructor(
+    val sampleService: SampleService
+) : ViewModel() {
+    fun sayHello(activity: AppCompatActivity) = makeText(
+        activity,
+        sampleService.hello(),
+        LENGTH_SHORT
+    ).show()
 }
-//@HiltAndroidApp
+
+@HiltAndroidApp
 class SampleApplication : Application() {
     override fun onCreate() {
         super.onCreate()
     }
 }
 
+//@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
-    private val sampleService:SampleService=SampleServiceInMemory()
-    private val sampleViewModel:SampleViewModel= SampleViewModel(sampleService)
+//    @Inject lateinit var sampleService: SampleService
+//    @Inject lateinit var sampleViewModel: SampleViewModel
+    val sampleService: SampleService = SampleServiceInMemory()
+    val sampleViewModel: SampleViewModel = SampleViewModel(sampleService)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
